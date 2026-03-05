@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DraftPad | Private Online Notepad | Secure Text Editor by Alternate Income Source</title>
+    <meta name="description" content="A secure, private, and lightning-fast online notepad. No login required. Features autosave, offline mode, and clean distraction-free writing for writers and developers.">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%232563eb%22/><text y=%22.9em%22 x=%22.15em%22 font-size=%2270%22 fill=%22white%22 font-family=%22sans-serif%22 font-weight=%22bold%22>D</text></svg>">
+
+    <style>
+        :root { --main: #2563eb; --bg: #f8fafc; --white: #ffffff; --text: #1e293b; --border: #e2e8f0; --accent: #f1f5f9; }
+        * { box-sizing: border-box; }
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.6; scroll-behavior: smooth; }
+        
+        /* Navigation */
+        header { background: var(--white); border-bottom: 1px solid var(--border); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .logo-group { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .logo-box { background: var(--main); color: white; width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; }
+        .logo-text { font-size: 1.4rem; font-weight: 800; color: var(--text); letter-spacing: -0.5px; }
+        nav a { margin-left: 20px; text-decoration: none; color: #64748b; font-size: 0.9rem; font-weight: 600; transition: 0.2s; }
+        nav a:hover { color: var(--main); }
+
+        /* Editor Area */
+        #app-area { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+        .editor-container { background: var(--white); border-radius: 16px; border: 1px solid var(--border); box-shadow: 0 10px 30px rgba(0,0,0,0.04); overflow: hidden; transition: 0.3s; }
+        .editor-container:focus-within { border-color: var(--main); box-shadow: 0 15px 40px rgba(37, 99, 235, 0.1); }
+        .toolbar { background: var(--accent); padding: 12px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 10px; flex-wrap: wrap; }
+        #editor { min-height: 450px; padding: 40px; outline: none; font-size: 19px; color: #334155; white-space: pre-wrap; word-wrap: break-word; }
+        
+        /* Buttons */
+        button { background: white; border: 1px solid #cbd5e1; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.2s; font-size: 14px; display: flex; align-items: center; gap: 5px; }
+        button:hover { background: #f8fafc; border-color: var(--main); color: var(--main); }
+        .btn-blue { background: var(--main); color: white; border: none; padding: 8px 20px; }
+        .btn-blue:hover { background: #1d4ed8; color: white; transform: translateY(-1px); }
+
+        .status-bar { margin-top: 15px; font-size: 13px; color: #94a3b8; display: flex; justify-content: space-between; padding: 0 5px; }
+
+        /* SEO Rich Content Section */
+        .seo-section { max-width: 800px; margin: 100px auto; padding: 0 25px; border-top: 2px solid var(--border); padding-top: 60px; }
+        .seo-section h1 { font-size: 2.5rem; color: #0f172a; margin-bottom: 25px; letter-spacing: -1px; }
+        .seo-section h2 { color: #0f172a; margin-top: 50px; font-size: 1.6rem; }
+        .seo-section p { margin-bottom: 24px; font-size: 1.15rem; color: #475569; line-height: 1.8; }
+        .seo-section ul { margin-bottom: 30px; padding-left: 20px; }
+        .seo-section li { margin-bottom: 15px; font-size: 1.1rem; color: #475569; }
+        
+        /* Footer */
+        footer { background: #0f172a; color: #94a3b8; padding: 80px 20px; margin-top: 120px; text-align: left; }
+        .footer-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .footer-col h4 { color: white; margin-bottom: 20px; }
+        .footer-col a { color: #94a3b8; text-decoration: none; display: block; margin-bottom: 10px; font-size: 14px; }
+        .footer-col a:hover { color: var(--main); }
+
+        @media (max-width: 600px) { 
+            #editor { padding: 25px; font-size: 17px; }
+            .toolbar { padding: 10px; }
+            header { flex-direction: column; gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="https://alternateincomesource.github.io" class="logo-group">
+        <div class="logo-box">D</div>
+        <div class="logo-text">DraftPad</div>
+    </a>
+    <nav>
+        <a href="#about">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="https://alternateincomesource.blogspot.com">Blog</a>
+    </nav>
+</header>
+
+<div id="app-area">
+    <div class="editor-container">
+        <div class="toolbar">
+            <button onclick="document.execCommand('bold')"><b>B</b></button>
+            <button onclick="document.execCommand('italic')"><i>I</i></button>
+            <button onclick="document.execCommand('underline')"><u>U</u></button>
+            <div style="flex-grow: 1;"></div>
+            <button onclick="downloadTxt()" class="btn-blue">Download .txt</button>
+            <button onclick="clearAll()" style="color:#ef4444;">Clear</button>
+        </div>
+        <div id="editor" contenteditable="true" spellcheck="true">Start typing your ideas securely...</div>
+    </div>
+    <div class="status-bar">
+        <span id="word-count">Words: 0</span>
+        <span id="save-status">Cloud-Free Local Storage Active</span>
+    </div>
+</div>
+
+<article class="seo-section" id="about">
+    <h1>The Ultimate Private Online Notepad for 2026</h1>
+    <p>Welcome to <strong>DraftPad</strong>, a premium web utility developed by <strong>Alternate Income Source</strong>. In an era where data privacy is often compromised, DraftPad provides a sanctuary for your thoughts, drafts, and sensitive information. Our online notepad is built on the philosophy of <em>User-Owned Data</em>.</p>
+
+    <h2>Why Use a Browser-Based Notepad?</h2>
+    <p>Modern productivity requires speed. DraftPad removes the friction of traditional word processors. There are no splash screens, no "Update Required" popups, and most importantly, no login forms. You open the page and start writing immediately. This makes it the ideal tool for:</p>
+    <ul>
+        <li><strong>Quick Brain Dumping:</strong> Capture ideas before they vanish.</li>
+        <li><strong>Distraction-Free Writing:</strong> A clean UI helps you reach a flow state.</li>
+        <li><strong>Temporary Data Storage:</strong> Perfect for stripping formatting from copied text.</li>
+        <li><strong>Privacy-First Journaling:</strong> Since data stays on your machine, your secrets are safe.</li>
+    </ul>
+
+    <h2>Advanced LocalStorage Technology</h2>
+    <p>DraftPad utilizes the <strong>HTML5 LocalStorage API</strong>. This means that every character you type is saved in real-time to your browser's internal database. Unlike Google Docs or Evernote, your text is never transmitted over the internet to a central server. This architecture ensures that even if you lose your internet connection, your work remains safe and accessible.</p>
+
+    <h2>Optimizing Your Workflow with DraftPad</h2>
+    <p>Productivity experts suggest that "simple is better." DraftPad is designed to be the digital equivalent of a physical sticky note, but with the power of modern web technology. By using DraftPad as your primary scratchpad, you reduce the "cognitive load" on your brain, allowing you to focus on the task at hand rather than navigating complex software menus.</p>
+
+    <h2>Frequently Asked Questions</h2>
+    <p><strong>Is my data safe from hackers?</strong> Since your data is not stored on our servers, there is no central database for a hacker to attack. Your notes are only as accessible as your physical device.</p>
+    <p><strong>Can I use this for coding?</strong> Yes! DraftPad handles plain text and code snippets perfectly, making it a favorite for developers who need to quickly edit a script or save a terminal command.</p>
+    <p><strong>Is this tool really free?</strong> Absolutely. Alternate Income Source is committed to providing high-quality tools for the community. We support our hosting through minimal, non-intrusive advertising.</p>
+
+    <h2>Best Practices for Digital Writing</h2>
+    <p>To get the most out of your writing sessions, we recommend using DraftPad in full-screen mode (F11). This removes browser tabs and OS distractions, creating a pure writing environment. Once your draft is complete, use our one-click "Download .txt" feature to move your work to your permanent archives.</p>
+</article>
+
+<footer>
+    <div class="footer-grid">
+        <div class="footer-col">
+            <h4>About the Project</h4>
+            <p>DraftPad is a flagship utility by Alternate Income Source, focusing on building a better, faster, and more private web.</p>
+        </div>
+        <div class="footer-col" id="privacy">
+            <h4>Privacy Policy</h4>
+            <a href="#">No Data Collection</a>
+            <a href="#">Local Storage Only</a>
+            <a href="#">Third-Party Ad Disclosure</a>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <a href="https://alternateincomesource.github.io">Official Hub</a>
+            <a href="https://alternateincomesource.blogspot.com">Our Blog</a>
+            <a href="mailto:support@yourdomain.com">Support</a>
+        </div>
+    </div>
+    <div style="text-align: center; margin-top: 50px; font-size: 12px; border-top: 1px solid #1e293b; padding-top: 20px;">
+        &copy; 2026 Alternate Income Source | All Rights Reserved.
+    </div>
+</footer>
+
+<script>
+    const editor = document.getElementById('editor');
+    const wordCount = document.getElementById('word-count');
+    const saveStatus = document.getElementById('save-status');
+
+    // Load saved content
+    window.onload = () => {
+        const saved = localStorage.getItem('draftpad_v2_premium');
+        if(saved) editor.innerHTML = saved;
+        updateCounters();
+    };
+
+    // Auto-save function
+    editor.addEventListener('input', () => {
+        localStorage.setItem('draftpad_v2_premium', editor.innerHTML);
+        updateCounters();
+        saveStatus.innerText = "Saving locally...";
+        setTimeout(() => { saveStatus.innerText = "All changes saved"; }, 1000);
+    });
+
+    function updateCounters() {
+        const text = editor.innerText.trim();
+        const words = text ? text.split(/\s+/).length : 0;
+        wordCount.innerText = `Words: ${words}`;
+    }
+
+    function downloadTxt() {
+        const text = editor.innerText;
+        const blob = new Blob([text], {type: 'text/plain'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'DraftPad-' + new Date().toISOString().slice(0,10) + '.txt';
+        a.click();
+    }
+
+    function clearAll() {
+        if(confirm("Permanently delete this note?")) {
+            editor.innerHTML = "";
+            localStorage.removeItem('draftpad_v2_premium');
+            updateCounters();
+        }
+    }
+
+    // Tab key support
+    editor.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab') {
+            e.preventDefault();
+            document.execCommand('insertHTML', false, '&#009');
+        }
+    });
+</script>
+</body>
+</html>
